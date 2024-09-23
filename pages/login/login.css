@@ -1,0 +1,582 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body{
+     background-color: #dedccf;
+}
+
+.image-container {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: calc(100vh - 80px);
+    z-index: 1; /* Set the z-index to 1 so the image is behind the container */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Make the image cover the full height and width of the container */
+}
+
+#container {
+    position: absolute;
+    top: 50%; /* Move the container to the middle of the viewport */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Set the z-index to 2 so the container is on top of the image */
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .35);
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+#container p{
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: .3px;
+    margin: 20px 0;
+}
+
+#container span{
+    font-size: 12px;
+}
+
+#container a{
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+    height: auto;
+}
+
+#container button{
+    background-color: transparent;
+    color: #1f3335;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 2px solid #e3ddb6; /* Start with a border */
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out; /* Smooth transition for color and size */
+}
+
+/* Hover Effect */
+#container button:hover {
+    color: #fff;
+    background: linear-gradient(to right, #727543, #797142); /* Gradient on hover */
+    border: 2px solid transparent; /* Border becomes transparent */
+    box-shadow: 0px 0px 20px rgba(88, 95, 57, 0.7); /* Glow effect */
+    transform: scale(1.1); /* Slightly larger on hover */
+}
+
+/* Pseudo-element for fancy animation */
+#container button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Start off-screen */
+    width: 300%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2); /* Light translucent slide */
+    transform: skewX(-30deg); /* Skew for a more dynamic effect */
+    transition: all 0.6s ease-in-out;
+}
+
+/* When hovering, expand the pseudo-element to create the effect */
+#container button:hover::before {
+    left: 100%; /* Slide across the button on hover */
+}
+
+/* Add a glow effect for the text */
+#container button:hover {
+    animation: text-glow 1.5s infinite; /* Glowing effect on the text */
+}
+
+@keyframes text-glow {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+}
+
+#container button.hidden{
+    background-color: transparent;
+    border-color: #fff;
+}
+
+#container form{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 0;
+}
+
+#container input{
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+}
+
+.form-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all .6s ease-in-out;
+}
+
+.sign-in{
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.container.active .sign-in{
+    transform: translateX(100%);
+}
+
+.sign-up{
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.active .sign-up{
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: move .6s;
+}
+
+@keyframes move{
+    0%, 49.99%{
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100%{
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+.social-icons{
+    margin: 20px 0;
+}
+
+.social-icons a{
+    border: 1px solid #ccc;
+    border-radius: 20%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    width: 40px;
+    height: 40px;
+}
+
+.toggle-container{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all .6s ease-in-out;
+    border-radius: 150px 0 0 100px;
+    z-index: 1000;
+}
+
+.container.active .toggle-container{
+    transform: translateX(-100%);
+    border-radius: 0 150px 100px 0;
+}
+
+.toggle{
+    background-color: #e3ddb6;
+    height: 100%;
+    background: linear-gradient(to right, #727543, #797142);
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translate(0);
+    transition: all .6s ease-in-out;
+}
+
+.container.container.active .toggle{
+    transform: translateX(50%);
+}
+
+.toggle-panel{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all .6s ease-in-out;
+}
+
+.toggle-left{
+    transform: translateX(-200%);
+}
+
+.toggle-right{
+    right: 0;
+    transform: translateX(0);
+}
+
+.container.active .toggle-left{
+    transform: translateX(0);
+}
+
+.container.active .toggle-right{
+    transform: translateX(200%);
+}
+
+.nav li {
+    list-style: none; /* Ensures no bullets for li */
+    margin: 0;
+    padding: 0;
+}
+
+/* Nav link hover animation */
+.nav-link a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative; /* Required for the underline effect */
+    transition: color 0.3s ease; /* Smooth transition of color */
+}
+
+/* Ensure nav-links class is applied */
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1; /* Makes nav take up remaining space */
+    padding: 0;
+    margin: 0; /* Remove default padding/margin */
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    padding: 0 10px; /* Add some horizontal padding around the links */
+    transition: all 0.3s ease;
+}
+
+/* Create an underline effect */
+.nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+/* On hover, change text color and grow underline */
+.nav a:hover {
+    color: #E5F3EE; /* Change the text color */
+    transform: scale(1.1); /* Slightly scale up the text */
+}
+
+.nav a:hover::after {
+    width: 100%; /* Full width underline */
+}
+
+/* Add glow effect on hover */
+@keyframes hover-glow {
+    0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+}
+
+.nav a:hover {
+    animation: hover-glow 0.4s forwards; /* Apply the glow animation */
+}
+
+.logo {
+    margin-right: auto; /* This pushes the logo to the left */
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+    max-height: 80px; /* Limit the logo height */
+}
+
+/* Ensure the navbar remains the same size regardless of logo changes */
+@media (min-width: 768px) {
+    .logo img {
+        max-height: 60px; /* Keep this max-height under the fixed header height */
+    }
+}
+
+@media (min-width: 1200px) {
+    .logo img {
+        max-height: 60px;
+    }
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position:relative;
+    z-index: 3;
+    top:0;
+    left:0;
+    z-index: 3;
+}
+
+/* Navbar and Navlink Css */
+.navbar-nav{
+    display: flex;
+    gap:100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-nav a {
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    transition: all 0.3s ease; /* Apply transition to all properties */
+}
+
+.navbar-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #000;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.navbar-nav a:hover {
+    color: #4f6256; /* Change the text color */
+    transform: scale(1.1); /* Slightly scale up the text */
+}
+
+.navbar-nav a:hover::after {
+    width: 100%; /* Full width underline */
+}
+
+/* Add glow effect on hover */
+@keyframes hover-glow {
+    0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(74, 81, 69, 0.8);
+    }
+}
+
+.navbar-nav a:hover {
+    animation: hover-glow 0.4s forwards; /* Apply the glow animation */
+}
+
+/* for cards below */
+.product-container{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.navbar-brand img {
+    max-width: 40%;
+    height: auto;
+    max-height: 80px; /* Limit the logo height */
+}
+
+/* Ensure the navbar remains the same size regardless of logo changes */
+@media (min-width: 768px) {
+    .navbar-brand img {
+        max-height: 60px; /* Keep this max-height under the fixed header height */
+    }
+}
+
+@media (min-width: 1200px) {
+    .navbar-brand img {
+        max-height: 60px;
+    }
+}
+
+.gsi-material-button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    background-color: WHITE;
+    background-image: none;
+    border: 1px solid #747775;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-family: 'Roboto', arial, sans-serif;
+    font-size: 14px;
+    height: 40px;
+    letter-spacing: 0.25px;
+    outline: none;
+    overflow: hidden;
+    padding: 0 12px;
+    position: relative;
+    text-align: center;
+    -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
+    transition: background-color .218s, border-color .218s, box-shadow .218s;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    max-width: 400px;
+    min-width: min-content;
+  }
+  
+  .gsi-material-button .gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+  }
+  
+  .gsi-material-button .gsi-material-button-content-wrapper {
+    -webkit-align-items: center;
+    align-items: center;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    height: 100%;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
+  
+  .gsi-material-button .gsi-material-button-contents {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    font-family: 'Roboto', arial, sans-serif;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+  }
+  
+  .gsi-material-button .gsi-material-button-state {
+    -webkit-transition: opacity .218s;
+    transition: opacity .218s;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  .gsi-material-button:disabled {
+    cursor: default;
+    background-color: #ffffff61;
+    border-color: #1f1f1f1f;
+  }
+  
+  .gsi-material-button:disabled .gsi-material-button-contents {
+    opacity: 38%;
+  }
+  
+  .gsi-material-button:disabled .gsi-material-button-icon {
+    opacity: 38%;
+  }
+  
+  .gsi-material-button:not(:disabled):active .gsi-material-button-state, 
+  .gsi-material-button:not(:disabled):focus .gsi-material-button-state {
+    background-color: #303030;
+    opacity: 12%;
+  }
+  
+  .gsi-material-button:not(:disabled):hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
+  }
+  
+  .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
+    background-color: #303030;
+    opacity: 8%;
+  }
+
+  .error-messages {
+    display: none; /* Hide by default */
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Light red border */
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.show {
+    display: block; /* Show when there's an error */
+}
