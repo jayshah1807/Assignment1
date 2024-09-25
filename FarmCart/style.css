@@ -1,74 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    background-color: #dedccf;
+html,body {
+    background-color: #dedace;
 }
 
-body{
-     background-color: #dedccf;
+.bg-custom-nav{
+    background-color: #8f802c;
 }
 
-/* Navbar and Navlink Css */
-.navbar-nav{
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav-item{
-    position: relative;
-    color: #000;
-    font-weight: bold;
-}
-
-.nav-item::after{
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    width : 100%;
-    background-color: #000;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease;
-}
-
-.nav-item:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-}
-
-/* For the image and the text which is on the image */
-.image-container{
-    position: relative;
-    text-align: center;
-}
-
-.image-container img {
-    width: 100%;
-    height: auto;
-}
-
-.image-text{
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+.custom-btn{
+    border: solid 1px;
     color: black;
-    padding: 20px;
-    border-radius: 10px;
 }
 
-/* for cards below */
-.product-container{
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
+.custom-btn:hover{
+
+    color : black;
+    background-color:white;
 }
+
+.navbar-nav .nav-link.active {
+    color: white; 
+    text-decoration: none; 
+    text-decoration-color: white; 
+}
+
+.navbar-nav .nav-link:hover {
+    color: white; 
+    text-decoration: none; 
+    text-decoration-color: white; 
+}
+
+
+.custom-dropdown {
+    width: 150px; 
+    text-align: center; 
+    left: 20%; 
+    transform: translateX(-30%); 
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+/* footer css */
+
+  .footer {
+    background-color: #8f802c;
+    padding: 20px 1px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer li {
+    margin-bottom: 10px;
+  }
+  
+  .footer a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    color: #fff;
+    text-decoration: none;
+
+  }
+
