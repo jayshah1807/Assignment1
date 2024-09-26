@@ -1,30 +1,24 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
+html,body {
+    background-color: #dedace;
 }
 
-body{
-     background-color: #dedccf;
+.bg-custom-nav{
+    background-color: #8f802c;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.custom-btn{
+    border: solid 1px;
+    color: black;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.custom-btn:hover{
+
+    color : black;
+    background-color:white;
 }
 
-/* Navbar and Navlink Css */
-.navbar-nav{
-    display: flex;
-    gap:100px;
+.navbar-nav {
+    gap: 40px;
 }
 
 .navbar-nav a {
@@ -32,7 +26,7 @@ nav {
     text-decoration: none;
     font-size: 18px;
     position: relative;
-    transition: all 0.3s ease; /* Apply transition to all properties */
+    transition: all 0.3s ease;
 }
 
 .navbar-nav a::after {
@@ -40,65 +34,74 @@ nav {
     position: absolute;
     width: 0;
     height: 2px;
-    background-color: #000;
+    background-color: #fff;
     bottom: -5px;
     left: 0;
     transition: width 0.3s ease;
 }
 
 .navbar-nav a:hover {
-    color: #4f6256; /* Change the text color */
-    transform: scale(1.1); /* Slightly scale up the text */
+    color: #fff; 
+    transform: scale(1.1); 
 }
 
 .navbar-nav a:hover::after {
-    width: 100%; /* Full width underline */
-}
-
-/* Add glow effect on hover */
-@keyframes hover-glow {
-    0% {
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(74, 81, 69, 0.8);
-    }
+    width: 100%; 
 }
 
 .navbar-nav a:hover {
-    animation: hover-glow 0.4s forwards; /* Apply the glow animation */
+    animation: hover-glow 0.4s forwards;
 }
 
-/* For the image and the text which is on the image */
-.image-container{
-    position: relative;
-    text-align: center;
-}
 
-.image-container img {
-    width: 100%;
+.custom-dropdown {
+    width: 150px; 
+    text-align: center; 
+    left: 20%; 
+    transform: translateX(-30%); 
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+/* footer css */
+
+  .footer {
+    background-color: #8f802c;
+    padding: 20px 1px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer li {
+    margin-bottom: 10px;
+  }
+  
+  .footer a {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .footer a:hover {
+    color: #fff;
+    text-decoration: none;
+
+  }
+
+  .navbar-brand {
+    width:10%;
     height: auto;
-}
+    max-height: 80px; /* Limit the logo height */
+  }
 
-.image-text{
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    color: black;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/* for cards below */
-.product-container{
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-.navbar-brand img {
-    max-width: 40%;
+  .navbar-brand img {
+    max-width: 100%;
     height: auto;
     max-height: 80px; /* Limit the logo height */
 }
@@ -116,75 +119,32 @@ nav {
     }
 }
 
-/* Login button styles */
-#navbar .btn {
-    position: relative;
-    padding: 10px 30px;
-    border: 2px solid #e3ddb6; /* Green border */
-    border-radius: 8px;
-    background-color: transparent;
-    color: #e3ddb6;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.4s ease-in-out;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
-}
-
-/* Hover effect with zoom and shadow */
-#navbar .btn:hover {
-    background: linear-gradient(45deg, #727543, #797142); /* Gradient background */
-    color: #fff;
-    border-color: transparent; /* Remove border on hover */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 15px 40px rgba(210, 229, 141, 0.4); /* Enhanced shadow effect */
-    transform: scale(1.1); /* Zoom effect */
-}
-
-/* Glowing animation on hover */
-#navbar .btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%; /* Starts off the button */
-    width: 300%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2); /* Light translucent glow */
-    transform: skewX(-30deg); /* Skew effect for dynamic movement */
-    transition: all 0.7s ease-in-out; /* Smooth transition */
-}
-
-#navbar .btn:hover::before {
-    left: 100%; /* Moves across the button on hover */
-}
-
-/* Continuous text glow animation */
-@keyframes text-glow {
+.card-title span {
+    color: green;
+    animation: animate 2s infinite;
+  }
+  
+  @keyframes animate {
     0% {
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      transform: scale(1);
+      color: green;
     }
     50% {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+      transform: scale(1.2);
+      color: #0f6129; /* change to a lighter shade of green */
     }
     100% {
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      transform: scale(1);
+      color: green;
     }
+  }
+
+  .card {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Customize the shadow as needed */
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-#navbar .btn:hover {
-    animation: text-glow 1s infinite ease-in-out; /* Apply the text glow on hover */
+.card:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Slightly increase shadow on hover */
 }
 
-button {
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #264A44;
-}

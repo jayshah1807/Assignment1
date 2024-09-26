@@ -2,6 +2,42 @@ const container = document.getElementById("container");
 const registerBtn = document.getElementById("register");
 const loginBtn = document.getElementById("login");
 
+// Get the main container and form container elements
+const mainContainer = document.getElementById('container');
+const formContainer = document.querySelector('.form-container');
+
+// Function to adjust the height of the main container
+function adjustMainContainerHeight() {
+    // Get the height of the form container
+    const formContainerHeight = formContainer.offsetHeight;
+
+    // Get the height of the main container
+    const mainContainerHeight = mainContainer.offsetHeight;
+
+    // If the form container's height exceeds the main container's height, adjust the main container's height
+    if (formContainerHeight > mainContainerHeight) {
+        mainContainer.style.height = `${formContainerHeight}px`;
+    }
+}
+
+// Call the function whenever the form container's height changes
+formContainer.addEventListener('DOMSubtreeModified', adjustMainContainerHeight);
+
+// Call the function initially to set the height
+adjustMainContainerHeight();
+
+// Get the farmer details div
+const farmerDetailsDiv = document.querySelector('.farmer-details');
+
+// Add an event listener to the role select dropdown
+document.getElementById('role').addEventListener('change', function() {
+    if (this.value === 'farmer') {
+        farmerDetailsDiv.style.display = 'block';
+    } else {
+        farmerDetailsDiv.style.display = 'none';
+    }
+});
+
 registerBtn.addEventListener("click", () => {
     container.classList.add("active");
 });
@@ -25,14 +61,35 @@ const errorMessages = {
 };
 
 // Signup Logic
+// Signup Logic
+// Signup Logic
 document.getElementById('signupForm').addEventListener('submit', function(event) {
     event.preventDefault();
     
     const errors = [];
     const name = document.querySelector('input[placeholder="Full Name"]').value;
     const email = document.querySelector('input[placeholder="Email"]').value;
+    const contact = document.querySelector('input[placeholder="Mobile Number"]').value;
     const password = document.querySelector('input[placeholder="Password"]').value;
     const retypePassword = document.querySelector('input[placeholder="Re-enter Password"]').value;
+    const role = document.getElementById('role').value;
+    let farmName, yearsOfExperience, dateOfEstablishment;
+
+    if (role === 'farmer') {
+        farmName = document.getElementById('farmName').value;
+        yearsOfExperience = document.getElementById('yearsOfExperience').value;
+        dateOfEstablishment = document.getElementById('dateOfEstablishment').value;
+
+        if (!farmName) {
+            errors.push('Please enter the name of your farm.');
+        }
+        if (!yearsOfExperience) {
+            errors.push('Please enter your years of experience.');
+        }
+        if (!dateOfEstablishment) {
+            errors.push('Please enter the date of establishment.');
+        }
+    }
 
     if (!name) {
         errors.push(errorMessages.name);
@@ -66,34 +123,80 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
         errorContainer.innerHTML = errors.join('<br>');
         errorContainer.classList.add('show'); // Show error container
     } else {
-        // Save user data in local storage
-        localStorage.setItem('username', email);
-        localStorage.setItem('password', password);
-        
-        // Redirect to signin page
-        window.location.href = 'signin.html'; // Adjust the path as necessary
+        // Retrieve the existing users array from localStorage or create an empty array
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+
+        // Check if the email is already registered
+        const userExists = users.some(user => user.email === email);
+        if (userExists) {
+            errorContainer.innerHTML = 'This email is already registered.';
+            errorContainer.classList.add('show');
+            return;
+        }
+
+        // Create a new user object
+        const newUser = {
+            name: name,
+            email: email,
+            contact: contact,
+            password: password, // Note: Storing plain text passwords is not recommended; consider hashing
+            role: role,
+            farmName: farmName,
+            yearsOfExperience: yearsOfExperience,
+            dateOfEstablishment: dateOfEstablishment
+        };
+
+        // Add the new user to the array
+        users.push(newUser);
+
+        // Save the updated array back to localStorage
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('userRole', role);
+
+        // Redirect to the sign-in page
+        window.location.href = 'login.html'; // Adjust the path as necessary
     }
 });
 
 // Signin Logic
 document.getElementById('signinForm').addEventListener('submit', function(event) {
     event.preventDefault();
-
+  
     const email = document.getElementById('signinUsername').value;
     const password = document.getElementById('signinPassword').value;
+  
+    // Retrieve the users array from localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+  
+    // Check if the credentials match any registered user
+    const user = users.find(user => user.email === email && user.password === password);
+  
+    if (user) {
+      // Store the logged-in user's email in localStorage for profile access
+      localStorage.setItem('loggedInUserEmail', email);  // Store the email for later use
+      localStorage.setItem('userRole', user.role);
 
-    // Retrieve user data from local storage
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
-
-    // Check if the credentials match
-    if (email === storedUsername && password === storedPassword) {
-        // Redirect to home page
-        window.location.href = '../home/index.html'; // Adjust the path as necessary
+      if (user.role == "farmer"){
+        localStorage.setItem('farmerId', user.name);
+      }
+  
+      // Check if the user was redirected from the profile icon
+      const redirectFromProfile = localStorage.getItem('redirectFromProfile');
+  
+      if (redirectFromProfile) {
+        // If the user was redirected from the profile icon, redirect to the profile page
+        window.location.href = '../profile/profile.html';
+        localStorage.removeItem('redirectFromProfile');
+      } else {
+        // If the user was not redirected from the profile icon, redirect to the home page
+        window.location.href = '../home/index.html';
+      }
     } else {
-        alert('Invalid credentials. Please try again.');
+      const errorContainer = document.getElementById('signinErrors');
+      errorContainer.innerHTML = 'Invalid credentials. Please try again.';
+      errorContainer.classList.add('show');
     }
-});
+  });
 
 window.onload = function () {
     google.accounts.id.initialize({

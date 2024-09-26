@@ -72,19 +72,17 @@ resetPasswordButton.addEventListener('click', (e) => {
         return;
     }
 
-    // Assuming the user's email is already available
     const email = emailInput.value.trim();
     const storedUsername = localStorage.getItem('username');
     
-    // Ensure the email matches the one stored in local storage
     if (email === storedUsername) {
         // Update the password in local storage
         localStorage.setItem('password', newPassword);
         showSuccess('Password reset successfully. You can now log in with your new password.');
 
         setTimeout(() => {
-            window.location.href = '../signin/login.html'; // Redirect to the login page
-        }, 2000); // 2000 milliseconds = 2 seconds
+            window.location.href = '../signin/login.html';
+        }, 2000);
 
     } else {
         showError('Email does not match the registered account.');
