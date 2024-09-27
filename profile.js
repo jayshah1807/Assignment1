@@ -78,16 +78,12 @@ countrySelect.addEventListener('change', function() {
 fetchCountries();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Retrieve all users from localStorage
     const users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // Assume the currently logged-in user's email is stored separately for quick reference
     const currentUserEmail = localStorage.getItem('loggedInUserEmail');
 
-    // Find the current user in the users array based on their email
     const currentUser = users.find(user => user.email === currentUserEmail);
 
-    // Check if current user is found and populate the fields
     if (currentUser) {
         console.log('Current User Found:', currentUser);
 
@@ -105,19 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-// Update Profile Logic
 document.getElementById('editProfile').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault();
 
-    // Retrieve all users from localStorage
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const currentUserEmail = localStorage.getItem('loggedInUserEmail');
 
-    // Find the current user in the array
     const currentUserIndex = users.findIndex(user => user.email === currentUserEmail);
 
-    // If the user is not found, show an error (this should not happen in a properly managed session)
     if (currentUserIndex === -1) {
         alert('Error: User not found. Please log in again.');
         return;
@@ -163,7 +154,7 @@ document.getElementById('editProfile').addEventListener('submit', function (even
         localStorage.setItem('loggedInUserEmail', updatedEmail);
 
         alert('Profile updated successfully!');
-        window.location.href = '../home/index.html';
+        window.location.href = './index.html';
     }
 });
 

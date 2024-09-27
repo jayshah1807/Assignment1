@@ -1,0 +1,96 @@
+/* manageOrders.css */
+
+body {
+    background-color: #dedace;
+}
+
+.bg-custom-nav{
+    background-color: #8f802c;
+}
+
+.custom-btn{
+    border: solid 1px;
+    color: black;
+}
+
+.custom-btn:hover{
+
+    color : black;
+    background-color:white;
+}
+
+.navbar-nav {
+    gap: 40px;
+}
+
+.navbar-nav a {
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.navbar-nav a:hover {
+    color: #fff; 
+    transform: scale(1.1); 
+}
+
+.navbar-nav a:hover::after {
+    width: 100%; 
+}
+
+.navbar-nav a:hover {
+    animation: hover-glow 0.4s forwards;
+}
+
+.custom-dropdown {
+    width: 150px; 
+    text-align: center; 
+    left: 20%; 
+    transform: translateX(-30%); 
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.card-title span {
+    color: green;
+    animation: animate 2s infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: scale(1);
+        color: green;
+    }
+    50% {
+        transform: scale(1.2);
+        color: #0f6129;
+    }
+    100% {
+        transform: scale(1);
+        color: green;
+    }
+}
+
+.card {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}

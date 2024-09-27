@@ -2,13 +2,11 @@ const container = document.getElementById("container");
 const registerBtn = document.getElementById("register");
 const loginBtn = document.getElementById("login");
 
-// Get the main container and form container elements
 const mainContainer = document.getElementById('container');
 const formContainer = document.querySelector('.form-container');
 
 // Function to adjust the height of the main container
 function adjustMainContainerHeight() {
-    // Get the height of the form container
     const formContainerHeight = formContainer.offsetHeight;
 
     // Get the height of the main container
@@ -26,10 +24,8 @@ formContainer.addEventListener('DOMSubtreeModified', adjustMainContainerHeight);
 // Call the function initially to set the height
 adjustMainContainerHeight();
 
-// Get the farmer details div
 const farmerDetailsDiv = document.querySelector('.farmer-details');
 
-// Add an event listener to the role select dropdown
 document.getElementById('role').addEventListener('change', function() {
     if (this.value === 'farmer') {
         farmerDetailsDiv.style.display = 'block';
@@ -46,7 +42,6 @@ loginBtn.addEventListener("click", () => {
     container.classList.remove("active");
 });
 
-// Error messages
 const errorMessages = {
     name: "Oops! We need your name to create an account.",
     email: "Hold on! A valid email address is required.",
@@ -60,8 +55,6 @@ const errorMessages = {
     passwordMismatch: "Oops! The passwords do not match."
 };
 
-// Signup Logic
-// Signup Logic
 // Signup Logic
 document.getElementById('signupForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -121,12 +114,10 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
     errorContainer.innerHTML = ''; // Clear previous errors
     if (errors.length > 0) {
         errorContainer.innerHTML = errors.join('<br>');
-        errorContainer.classList.add('show'); // Show error container
+        errorContainer.classList.add('show');
     } else {
-        // Retrieve the existing users array from localStorage or create an empty array
         const users = JSON.parse(localStorage.getItem('users')) || [];
 
-        // Check if the email is already registered
         const userExists = users.some(user => user.email === email);
         if (userExists) {
             errorContainer.innerHTML = 'This email is already registered.';
@@ -134,69 +125,60 @@ document.getElementById('signupForm').addEventListener('submit', function(event)
             return;
         }
 
-        // Create a new user object
         const newUser = {
             name: name,
             email: email,
             contact: contact,
-            password: password, // Note: Storing plain text passwords is not recommended; consider hashing
+            password: password,
             role: role,
             farmName: farmName,
             yearsOfExperience: yearsOfExperience,
             dateOfEstablishment: dateOfEstablishment
         };
-
-        // Add the new user to the array
         users.push(newUser);
 
-        // Save the updated array back to localStorage
         localStorage.setItem('users', JSON.stringify(users));
         localStorage.setItem('userRole', role);
 
-        // Redirect to the sign-in page
-        window.location.href = 'login.html'; // Adjust the path as necessary
+        window.location.href = 'login.html'; 
     }
 });
 
 // Signin Logic
 document.getElementById('signinForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-  
-    const email = document.getElementById('signinUsername').value;
-    const password = document.getElementById('signinPassword').value;
-  
-    // Retrieve the users array from localStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-  
-    // Check if the credentials match any registered user
-    const user = users.find(user => user.email === email && user.password === password);
-  
-    if (user) {
-      // Store the logged-in user's email in localStorage for profile access
-      localStorage.setItem('loggedInUserEmail', email);  // Store the email for later use
-      localStorage.setItem('userRole', user.role);
+  event.preventDefault();
 
-      if (user.role == "farmer"){
-        localStorage.setItem('farmerId', user.name);
-      }
-  
-      // Check if the user was redirected from the profile icon
-      const redirectFromProfile = localStorage.getItem('redirectFromProfile');
-  
-      if (redirectFromProfile) {
-        // If the user was redirected from the profile icon, redirect to the profile page
-        window.location.href = '../profile/profile.html';
-        localStorage.removeItem('redirectFromProfile');
-      } else {
-        // If the user was not redirected from the profile icon, redirect to the home page
-        window.location.href = '../home/index.html';
-      }
-    } else {
-      const errorContainer = document.getElementById('signinErrors');
-      errorContainer.innerHTML = 'Invalid credentials. Please try again.';
-      errorContainer.classList.add('show');
+  const email = document.getElementById('signinUsername').value;
+  const password = document.getElementById('signinPassword').value;
+
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+
+  const user = users.find(user => user.email === email && user.password === password);
+
+  if (user) {
+    localStorage.setItem('loggedInUserEmail', email); 
+    localStorage.setItem('userRole', user.role);
+
+    if (user.role == "farmer"){
+      localStorage.setItem('farmerId', user.name);
     }
-  });
+
+    localStorage.setItem("isLoggedIn", "true");
+
+    const redirectFromProfile = localStorage.getItem('redirectFromProfile');
+
+    if (redirectFromProfile) {
+      window.location.href = './profile.html';
+      localStorage.removeItem('redirectFromProfile');
+    } else {
+      window.location.href = './index.html';
+    }
+  } else {
+    const errorContainer = document.getElementById('signinErrors');
+    errorContainer.innerHTML = 'Invalid credentials. Please try again.';
+    errorContainer.classList.add('show');
+  }
+});
 
 window.onload = function () {
     google.accounts.id.initialize({
@@ -205,16 +187,14 @@ window.onload = function () {
     });
     google.accounts.id.renderButton(
       document.querySelector('.g_id_signin'),
-      { theme: "outline", size: "large" } // customization options
+      { theme: "outline", size: "large" }
     );
-    google.accounts.id.prompt(); // Shows the prompt if not previously signed in
+    google.accounts.id.prompt();
   };
   
   function handleGoogleLoginResponse(response) {
-    // Token received from Google
     const idToken = response.credential;
   
-    // Send the token to your backend API for verification
     fetch('https://locahost:3000/auth/google', {
       method: 'POST',
       headers: {
@@ -225,7 +205,6 @@ window.onload = function () {
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        // Save user information or token in localStorage, and redirect
         localStorage.setItem('user', JSON.stringify(data.user));
         window.location.href = '/home/index.html';
       } else {
@@ -236,29 +215,3 @@ window.onload = function () {
       console.error('Error:', error);
     });
   }
-
-  const { OAuth2Client } = require('google-auth-library');
-  const client = new OAuth2Client('740253329912-bue2i83r5nhr9gld1k0ejh9mgg8ict5j.apps.googleusercontent.com');
-  
-  async function verifyGoogleToken(token) {
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: '740253329912-bue2i83r5nhr9gld1k0ejh9mgg8ict5j.apps.googleusercontent.com', // Specify the CLIENT_ID of the app that accesses the backend
-    });
-    const payload = ticket.getPayload();
-    return payload;  // Contains user details like email, name, etc.
-  }
-  
-  app.post('/auth/google', async (req, res) => {
-    const token = req.body.token;
-  
-    try {
-      const userPayload = await verifyGoogleToken(token);
-  
-      // Handle user login/signup logic, e.g., create account if new user or log in existing user
-      res.status(200).json({ success: true, user: userPayload });
-    } catch (error) {
-      res.status(400).json({ success: false, message: 'Invalid token' });
-    }
-  });
-  

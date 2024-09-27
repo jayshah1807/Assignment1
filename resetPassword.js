@@ -16,16 +16,18 @@ let otpVerified = false;
 requestOtpButton.addEventListener('click', (e) => {
     e.preventDefault();
     const email = emailInput.value.trim();
-    
+
     if (email === '') {
         showError('Please enter your email address.');
         return;
     }
+
+    const storedUsers = localStorage.getItem('users');
+    const usersArray = JSON.parse(storedUsers);
+    let emailMatchFound = false;
     
-    // Retrieve the stored email from localStorage
-    const storedUsername = localStorage.getItem('username');
-    
-    if (email === storedUsername) {
+    usersArray.forEach((user) => {
+      if (email === user.email) {
         // Generate a random OTP and store it in local storage
         const otp = Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('otp', otp);
@@ -33,8 +35,12 @@ requestOtpButton.addEventListener('click', (e) => {
         otpContainer.style.display = 'block';
         requestOtpButton.disabled = true;
         showSuccess('OTP sent to your email address. Please enter the OTP below.');
-    } else {
-        showError('Email address does not match our records.');
+        emailMatchFound = true; // Set the flag to true
+      }
+    });
+    
+    if (!emailMatchFound) {
+      showError('Email address does not match our records.');
     }
 });
 
@@ -61,12 +67,12 @@ resetPasswordButton.addEventListener('click', (e) => {
     e.preventDefault();
     const newPassword = newPasswordInput.value.trim();
     const reEnterNewPassword = reEnterNewPasswordInput.value.trim();
-    
+
     if (newPassword === '' || reEnterNewPassword === '') {
         showError('Please enter your new password and re-enter it below.');
         return;
     }
-    
+
     if (newPassword !== reEnterNewPassword) {
         showError('New password and re-entered password do not match.');
         return;
@@ -74,14 +80,14 @@ resetPasswordButton.addEventListener('click', (e) => {
 
     const email = emailInput.value.trim();
     const storedUsername = localStorage.getItem('username');
-    
+
     if (email === storedUsername) {
         // Update the password in local storage
         localStorage.setItem('password', newPassword);
         showSuccess('Password reset successfully. You can now log in with your new password.');
 
         setTimeout(() => {
-            window.location.href = '../signin/login.html';
+            window.location.href = './login.html';
         }, 2000);
 
     } else {

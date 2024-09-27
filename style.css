@@ -97,19 +97,18 @@ html,body {
   .navbar-brand {
     width:10%;
     height: auto;
-    max-height: 80px; /* Limit the logo height */
+    max-height: 80px;
   }
 
   .navbar-brand img {
     max-width: 100%;
     height: auto;
-    max-height: 80px; /* Limit the logo height */
+    max-height: 80px;
 }
 
-/* Ensure the navbar remains the same size regardless of logo changes */
 @media (min-width: 768px) {
     .navbar-brand img {
-        max-height: 60px; /* Keep this max-height under the fixed header height */
+        max-height: 60px; 
     }
 }
 
@@ -131,7 +130,7 @@ html,body {
     }
     50% {
       transform: scale(1.2);
-      color: #0f6129; /* change to a lighter shade of green */
+      color: #0f6129;
     }
     100% {
       transform: scale(1);
@@ -140,11 +139,11 @@ html,body {
   }
 
   .card {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Customize the shadow as needed */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
     transition: box-shadow 0.3s ease-in-out;
 }
 
 .card:hover {
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Slightly increase shadow on hover */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
 }
 
